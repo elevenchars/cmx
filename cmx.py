@@ -36,7 +36,7 @@ def draw_position(draw, data):
     y = round(y)
     conf = data["response"]["confidenceFactor"]
     conf_x = conf / data["response"]["mapInfo"]["floorDimension"]["width"] * w
-    conf_y = conf / data["response"]["mapInfo"]["floorDimension"]["width"] * h
+    conf_y = conf / data["response"]["mapInfo"]["floorDimension"]["length"] * h
     conf_x = round(conf_x)
     conf_y = round(conf_y)
     draw.rectangle([(x-conf_x, y-conf_y), (x+conf_x, y+conf_y)], outline=(0, 0, 255))
