@@ -24,7 +24,7 @@ def display_ip(ip, config):
     draw = ImageDraw.Draw(img)
     draw = draw_position(draw, data)
     f = ImageFont.truetype("Arial.ttf", 16)
-    draw.text((0,0), "Retrieved on " + datetime.datetime.now().strftime("%c") + "\nIP Address: " + ip, (0,0,0), font=f)
+    draw.text((0,0), "Retrieved on " + datetime.datetime.now().strftime("%c") + "\nIP Address: " + ip + "\nLocation: " + data["response"]["mapInfo"]["mapHierarchy"], (0,0,0), font=f)
     img.show()
 
 def draw_position(draw, data):
