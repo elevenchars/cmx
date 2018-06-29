@@ -48,8 +48,6 @@ def draw_position(draw, data):
     draw.ellipse([(x-5, y-5), (x+5, y+5)], fill=(0, 255, 255))    
     return draw
 
-
-
 if __name__ == "__main__":
     with open("config.json") as config_file:
         config = json.load(config_file)
