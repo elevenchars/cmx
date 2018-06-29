@@ -45,7 +45,7 @@ def draw_position(draw, data):
     conf_x = round(conf_x)
     conf_y = round(conf_y)
     draw.rectangle([(x-conf_x, y-conf_y), (x+conf_x, y+conf_y)], outline=(0, 0, 255))
-    draw.ellipse([(x-5, y-5), (x+5, y+5)], fill=(0, 255, 0))    
+    draw.ellipse([(x-5, y-5), (x+5, y+5)], fill=(0, 255, 255))    
     return draw
 
 
