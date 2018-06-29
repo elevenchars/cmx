@@ -10,21 +10,26 @@ from io import BytesIO
 import datetime
 
 def basic(u, p):
-    return "Basic " + base64.b64encode((u + ":" + p).encode()).decode("utf-8")
+    return "Basic " + base64.b64encode(("{}:{}".format(u,p)).encode()).decode("utf-8")
 
 def locate_ip(ip, config):
-    print(config["location_endpoint"] + ip)
-    location_data = requests.get(config["location_endpoint"] + ip, headers={"Authorization" : basic(config["username"], config["password"])}).json()
+    # print(config["location_endpoint"] + ip)
+    location_data = requests.get("{}{}".format(config["location_endpoint"], ip), headers={"Authorization" : basic(config["username"], config["password"])}).json()
     return location_data
 
 def display_ip(ip, config):
     data = locate_ip(ip, config)
-    floor_map = requests.get(config["map_endpoint"] + data["response"]["mapInfo"]["image"]["imageName"], headers={"Authorization" : basic(config["username"], config["password"])})
+    floor_map = requests.get("{}{}".format(config["map_endpoint"], data["response"]["mapInfo"]["image"]["imageName"]), headers={"Authorization" : basic(config["username"], config["password"])})
     img = Image.open(BytesIO(floor_map.content))
     draw = ImageDraw.Draw(img)
     draw = draw_position(draw, data)
     f = ImageFont.truetype("Arial.ttf", 16)
-    draw.text((0,0), "Retrieved on " + datetime.datetime.now().strftime("%c") + "\nIP Address: " + ip + "\nLocation: " + data["response"]["mapInfo"]["mapHierarchy"], (0,0,0), font=f)
+    info = """Retrieved on {}
+    IP Address: {}
+    Location: {}
+    Confidence: {}
+    """.format(datetime.datetime.now().strftime("%c"), ip, data["response"]["mapInfo"]["mapHierarchy"], data["response"]["confidenceFactor"])
+    draw.text((0,0), info, (0,0,0), font=f)
     img.show()
 
 def draw_position(draw, data):
