@@ -9,6 +9,8 @@ import socket
 from io import BytesIO
 import datetime
 
+import argparse
+
 def basic(u, p):
     return "Basic " + base64.b64encode(("{}:{}".format(u,p)).encode()).decode("utf-8")
 
@@ -51,6 +53,14 @@ def draw_position(draw, data):
 if __name__ == "__main__":
     with open("config.json") as config_file:
         config = json.load(config_file)
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--ip", help="set ip address to locate")
+    args = parser.parse_args()
+    
+    if args.ip:
+        ip = args.ip
+    else:
+        ip = socket.gethostbyname(socket.gethostname())
 
-    ip = socket.gethostbyname(socket.gethostname())
     display_ip(ip, config)
