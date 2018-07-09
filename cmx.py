@@ -25,6 +25,10 @@ def display_ip(ip, config):
     img = Image.open(BytesIO(floor_map.content))
     draw = ImageDraw.Draw(img)
     draw = draw_position(draw, data)
+    draw = draw_info(draw, data)
+    return img
+
+def draw_info(draw, data):
     f = ImageFont.truetype("Arial.ttf", 16)
     info = """Retrieved on {}
     IP Address: {}
@@ -32,7 +36,7 @@ def display_ip(ip, config):
     Confidence: {}
     """.format(datetime.datetime.now().strftime("%c"), ip, data["response"]["mapInfo"]["mapHierarchy"], data["response"]["confidenceFactor"])
     draw.text((0,0), info, (0,0,0), font=f)
-    img.show()
+    return draw
 
 def draw_position(draw, data):
     w = data["response"]["mapInfo"]["image"]["width"]
@@ -63,4 +67,4 @@ if __name__ == "__main__":
     else:
         ip = socket.gethostbyname(socket.gethostname())
 
-    display_ip(ip, config)
+    display_ip(ip, config).show()
