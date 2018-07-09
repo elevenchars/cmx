@@ -55,7 +55,7 @@ if __name__ == "__main__":
         config = json.load(config_file)
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ip", help="set ip address to locate")
+    parser.add_argument("--ip", help="ip address to locate")
     args = parser.parse_args()
     
     if args.ip:
