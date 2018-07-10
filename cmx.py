@@ -68,3 +68,4 @@ if __name__ == "__main__":
         ip = socket.gethostbyname(socket.gethostname())
 
     display_ip(ip, config).show()
+    
